@@ -1,10 +1,22 @@
 import React from "react";
 import Cards from "./Cards";
 
+//!Note calling component all time is not correct for us
+
 const CardList = ({ robots }) => {
+  const cardComponent = robots.map((user, index) => {
+    return (
+      <Cards
+        id={robots[index].id}
+        name={robots[index].name}
+        email={robots[index].email}
+        username={robots[index].username}
+      />
+    );
+  });
   return (
     <div>
-      <Cards
+      {/* <Cards
         id={robots[0].id}
         name={robots[0].name}
         email={robots[0].email}
@@ -21,7 +33,8 @@ const CardList = ({ robots }) => {
         name={robots[2].name}
         email={robots[2].email}
         username={robots[2].username}
-      />
+      /> */}
+      {cardComponent}
     </div>
   );
 };
