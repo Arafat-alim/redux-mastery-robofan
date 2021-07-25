@@ -4,16 +4,16 @@ import Cards from "./Cards";
 //!Note calling component all time is not correct for us
 
 const CardList = ({ robots }) => {
-  const cardComponent = robots.map((user, index) => {
-    return (
-      <Cards
-        id={robots[index].id}
-        name={robots[index].name}
-        email={robots[index].email}
-        username={robots[index].username}
-      />
-    );
-  });
+  //   const cardComponent = robots.map((user, index) => {
+  //     return (
+  //       <Cards
+  //         id={robots[index].id}
+  //         name={robots[index].name}
+  //         email={robots[index].email}
+  //         username={robots[index].username}
+  //       />
+  //     );
+  //   });
   return (
     <div>
       {/* <Cards
@@ -34,7 +34,19 @@ const CardList = ({ robots }) => {
         email={robots[2].email}
         username={robots[2].username}
       /> */}
-      {cardComponent}
+      {/* {cardComponent} */}
+      {/*! Second method to do the same thing */}
+
+      {robots.map((user, index) => {
+        return (
+          <Cards
+            id={robots[index].id}
+            name={robots[index].name}
+            email={robots[index].email}
+            username={robots[index].username}
+          />
+        );
+      })}
     </div>
   );
 };
