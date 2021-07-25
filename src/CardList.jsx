@@ -40,6 +40,7 @@ const CardList = ({ robots }) => {
       {robots.map((user, index) => {
         return (
           <Cards
+            key={index}
             id={robots[index].id}
             name={robots[index].name}
             email={robots[index].email}
