@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CardList from "./CardList";
-import { robots } from "./robots";
 import SearchBox from "./SearchBox";
+import Scroll from "./Scroll.jsx";
 //changing my functional component app into class component
 class App extends Component {
   //whenever i use state put into the componentn with using constructor
@@ -10,7 +10,7 @@ class App extends Component {
 
     this.state = {
       message: "Boom!! YOur Robots are Here!",
-      robots: robots,
+      robots: [],
       searchfield: "",
     };
   }
@@ -28,7 +28,16 @@ class App extends Component {
 
     // robots.length === 0 ? "No robots found" : filteredRobots;
   };
-
+  componentDidMount() {
+    //fetching my api from here
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        return response.json();
+      })
+      .then((users) => {
+        this.setState({ robots: users });
+      });
+  }
   render() {
     const filteredRobots = this.state.robots.filter((robot) => {
       return robot.name
@@ -39,11 +48,13 @@ class App extends Component {
     return (
       <div className="tc">
         <h1>Robo Fans</h1>
-        <h2>{this.state.message}</h2>
+        <h1>{this.state.message}</h1>
         {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
 
         <SearchBox searchChange={this.searchChange} />
-        <CardList robots={filteredRobots} />
+        <Scroll>
+          <CardList robots={filteredRobots} />
+        </Scroll>
         {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
       </div>
     );
