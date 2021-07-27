@@ -39,25 +39,27 @@ class App extends Component {
       });
   }
   render() {
-    const filteredRobots = this.state.robots.filter((robot) => {
-      return robot.name
-        .toLowerCase()
-        .includes(this.state.searchfield.toLowerCase());
+    const { robots, searchfield, message } = this.state;
+    const filteredRobots = robots.filter((robot) => {
+      return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     });
-    // filteredRobots.length === 0 ? "No Robots found" : filteredRobots;
-    return (
-      <div className="tc">
-        <h1>Robo Fans</h1>
-        <h1>{this.state.message}</h1>
-        {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
 
-        <SearchBox searchChange={this.searchChange} />
-        <Scroll>
-          <CardList robots={filteredRobots} />
-        </Scroll>
-        {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
-      </div>
-    );
+    if (filteredRobots.length === 0) {
+      return <h1>Loading ....</h1>;
+    } else {
+      return (
+        <div className="tc">
+          <h1>Robo Fans</h1>
+          <h1>{message}</h1>
+          {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
+          <SearchBox searchChange={this.searchChange} />
+          <Scroll>
+            <CardList robots={filteredRobots} />
+          </Scroll>
+          {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
+        </div>
+      );
+    }
   }
 }
 
