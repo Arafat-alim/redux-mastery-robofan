@@ -55,22 +55,26 @@ class App extends Component {
       return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     });
 
-    return !filteredRobots.length ? (
+    return !robots.length ? (
       <h1>Loading ....</h1>
     ) : (
       <>
         {popup ? <Popup closePopup={this.closePopup} /> : ""}
-        <div className="tc">
-          <h1>Robo Fans</h1>
-          <h1>{message}</h1>
-          {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
-          <button onClick={this.openPopup}>Open Popup Button</button>
-          <SearchBox searchChange={this.searchChange} />
-          <Scroll>
-            <CardList robots={filteredRobots} />
-          </Scroll>
-          {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
-        </div>
+        {filteredRobots.length === 0 ? (
+          <h1>No robots to show</h1>
+        ) : (
+          <div className="tc">
+            <h1>Robo Fans</h1>
+            <h1>{message}</h1>
+            {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
+            <button onClick={this.openPopup}>Open Popup Button</button>
+            <SearchBox searchChange={this.searchChange} />
+            <Scroll>
+              <CardList robots={filteredRobots} />
+            </Scroll>
+            {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
+          </div>
+        )}
       </>
     );
   }
