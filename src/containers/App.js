@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import CardList from "../Components/CardList";
 import SearchBox from "../Components/SearchBox";
 import Scroll from "../Components/Scroll";
+import Popup from "../Components/Popup";
 //changing my functional component app into class component
 class App extends Component {
   //whenever i use state put into the componentn with using constructor
@@ -12,6 +13,7 @@ class App extends Component {
       message: "Boom!! YOur Robots are Here!",
       robots: [],
       searchfield: "",
+      popup: false,
     };
   }
   // changeMessage = () => {
@@ -38,8 +40,17 @@ class App extends Component {
         this.setState({ robots: users });
       });
   }
+
+  //Pop-Up
+  openPopup = () => {
+    this.setState({ popup: true });
+  };
+
+  closePopup = () => {
+    this.setState({ popup: false });
+  };
   render() {
-    const { robots, searchfield, message } = this.state;
+    const { robots, searchfield, message, popup } = this.state;
     const filteredRobots = robots.filter((robot) => {
       return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     });
@@ -47,16 +58,20 @@ class App extends Component {
     return !filteredRobots.length ? (
       <h1>Loading ....</h1>
     ) : (
-      <div className="tc">
-        <h1>Robo Fans</h1>
-        <h1>{message}</h1>
-        {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
-        <SearchBox searchChange={this.searchChange} />
-        <Scroll>
-          <CardList robots={filteredRobots} />
-        </Scroll>
-        {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
-      </div>
+      <>
+        {popup ? <Popup closePopup={this.closePopup} /> : ""}
+        <div className="tc">
+          <h1>Robo Fans</h1>
+          <h1>{message}</h1>
+          {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
+          <button onClick={this.openPopup}>Open Popup Button</button>
+          <SearchBox searchChange={this.searchChange} />
+          <Scroll>
+            <CardList robots={filteredRobots} />
+          </Scroll>
+          {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
+        </div>
+      </>
     );
   }
 }
