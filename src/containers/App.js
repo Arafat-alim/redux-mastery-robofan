@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import CardList from "./CardList";
-import SearchBox from "./SearchBox";
-import Scroll from "./Scroll.jsx";
+import CardList from "../Components/CardList";
+import SearchBox from "../Components/SearchBox";
+import Scroll from "../Components/Scroll";
 //changing my functional component app into class component
 class App extends Component {
   //whenever i use state put into the componentn with using constructor
@@ -28,9 +28,9 @@ class App extends Component {
 
     // robots.length === 0 ? "No robots found" : filteredRobots;
   };
-  componentDidMount() {
+  async componentDidMount() {
     //fetching my api from here
-    fetch("https://jsonplaceholder.typicode.com/users")
+    await fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {
         return response.json();
       })
