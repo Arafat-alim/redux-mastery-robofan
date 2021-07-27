@@ -44,22 +44,20 @@ class App extends Component {
       return robot.name.toLowerCase().includes(searchfield.toLowerCase());
     });
 
-    if (!filteredRobots.length) {
-      return <h1>Loading ....</h1>;
-    } else {
-      return (
-        <div className="tc">
-          <h1>Robo Fans</h1>
-          <h1>{message}</h1>
-          {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
-          <SearchBox searchChange={this.searchChange} />
-          <Scroll>
-            <CardList robots={filteredRobots} />
-          </Scroll>
-          {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
-        </div>
-      );
-    }
+    return !filteredRobots.length ? (
+      <h1>Loading ....</h1>
+    ) : (
+      <div className="tc">
+        <h1>Robo Fans</h1>
+        <h1>{message}</h1>
+        {/* <button onClick={this.changeMessage}>Subscribe here!</button> */}
+        <SearchBox searchChange={this.searchChange} />
+        <Scroll>
+          <CardList robots={filteredRobots} />
+        </Scroll>
+        {/* {filteredRobots.length === 0 ? this.changeMessage : ""} */}
+      </div>
+    );
   }
 }
 
