@@ -31,6 +31,7 @@ class App extends Component {
     // robots.length === 0 ? "No robots found" : filteredRobots;
   };
   async componentDidMount() {
+    console.log(this.props.store);
     //fetching my api from here
     await fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => {

@@ -2,14 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import tachyons from "tachyons";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import { searchRobots } from "./reducer";
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./containers/App.js";
 import "./containers/App.css";
 
+//creating out pyara store here
+const store = createStore(searchRobots); //boom our store is ready to use now
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App store={store} />
   </React.StrictMode>,
   document.getElementById("root")
 );
