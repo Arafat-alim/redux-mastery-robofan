@@ -4,18 +4,23 @@ import SearchBox from "../Components/SearchBox";
 import Scroll from "../Components/Scroll";
 import Popup from "../Components/Popup";
 import { connect } from "react-redux";
-import { setSearchField } from "../actions";
+import { setSearchField, requestRobots } from "../actions";
 
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    searchField: state.searchField,
+    searchField: state.searchRobots.searchField,
+    robots: state.requestRobots.robots,
+    error: state.requestRobots.error,
+    isPending: state.requestRobots.isPending,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     searchChange: (event) => dispatch(setSearchField(event.target.value)),
+    // onRequestRobots: () => requestRobots(dispatch),
+    onRequestRobots: () => dispatch(requestRobots()),
   };
 };
 //changing my functional component app into class component
@@ -48,13 +53,14 @@ class App extends Component {
   async componentDidMount() {
     // console.log(this.props.store.getState());
     //fetching my api from here
-    await fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => {
-        return response.json();
-      })
-      .then((users) => {
-        this.setState({ robots: users });
-      });
+    //   await fetch("https://jsonplaceholder.typicode.com/users")
+    //     .then((response) => {
+    //       return response.json();
+    //     })
+    //     .then((users) => {
+    //       this.setState({ robots: users });
+    //     });
+    this.props.onRequestRobots();
   }
 
   //Pop-Up
@@ -67,13 +73,14 @@ class App extends Component {
   };
   render() {
     console.log("see", this.props);
-    const { robots, message, popup } = this.state;
-    const { searchChange, searchField } = this.props;
+    // const { robots} = this.state
+    const { message, popup } = this.state;
+    const { searchChange, searchField, robots, isPending } = this.props;
     const filteredRobots = robots.filter((robot) => {
       return robot.name.toLowerCase().includes(searchField.toLowerCase());
     });
 
-    return !robots.length ? (
+    return isPending ? (
       <h1>Loading ....</h1>
     ) : (
       <>

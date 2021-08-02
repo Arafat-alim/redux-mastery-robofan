@@ -3,15 +3,24 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import tachyons from "tachyons";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import { searchRobots } from "./reducer";
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { searchRobots, requestRobots } from "./reducer";
 
 import reportWebVitals from "./reportWebVitals";
 import App from "./containers/App.js";
 import "./containers/App.css";
+import { createLogger } from "redux-logger";
+import thunkMiddleware from "redux-thunk";
 
+const rootReducers = combineReducers({ searchRobots, requestRobots });
+
+const logger = createLogger(); //here logger is a middleware
 //creating out pyara store here
-const store = createStore(searchRobots); //boom our store is ready to use now
+const store = createStore(
+  rootReducers,
+  applyMiddleware(thunkMiddleware, logger)
+); //boom our store is ready to use now
+//creating our dulara logger
 
 ReactDOM.render(
   <React.StrictMode>
